@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" th:href="@{/images/favicon.ico}">
+
+    <title>工作流</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link th:href="@{/css/ie10-viewport-bug-workaround.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/copyright.css}" type="text/css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .table-responsive
+        {
+            padding: 50px 10%;
+        }
+
+        caption
+        {
+            font-family: "黑体","Times New Roman";
+            font-size: 30px;
+            color:black;
+        }
+        .right {
+            position: absolute;
+            right: 10px;
+            width: 100px;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top" th:fragment="head">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">《软件工程》-报销OA系统</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a th:href="@{/index}">主页</a></li>
+                <li th:if="${user.role==1}"><a th:href="@{/apply}">报销申请</a></li>
+                <li th:if="${user.role!=1}"><a th:href="@{/check}">报销审核</a></li>
+                <li th:if="${user==null}"><a th:href="@{/login}">登录</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li th:if="${user!=null}">
+                    <div class="dropdown">
+                        <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img class="img-circle" th:src="${user.headImage}" style="width:30px;" alt="头像"/>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a th:text="${user.nickname}">用户名</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" th:href="@{/logout}">退出</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+<div class="container">
+    <div class="table-responsive">
+        <table class="table">
+            <caption>报销单</caption>
+            <thead>
+            <tr>
+                <th>流程实例ID</th>
+                <th>主题</th>
+                <th>内容</th>
+                <th>审批状态</th>
+                <th>当前活动节点</th>
+                <th>时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="expense : ${expenses}">
+                <td th:text="${expense.instanceId}">fasfdfasf</td>
+                <td th:text="${expense.subject}">差旅费</td>
+                <td th:text="${expense.content}">食宿共计1000元</td>
+                <td th:switch="${expense.status}">
+                    <p th:case="0">审核中</p>
+                    <p th:case="1">部门经理审核通过</p>
+                    <p th:case="2">部门经理驳回</p>
+                    <p th:case="3">总经理审核通过</p>
+                    <p th:case="4">总经理驳回</p>
+                </td>
+                <td th:switch="${expense.processId}">
+                    <p th:case="1">员工报销申请</p>
+                    <p th:case="2">部门经理审批</p>
+                    <p th:case="3">总经理审批</p>
+                    <p th:case="4">审批完成</p>
+                </td>
+                <td th:text="${expense.applyTime}">2020-11-5</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div><!-- /.container -->
+<div id="footer" th:fragment="foot">CopyRight@2020 李灵芝 </div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script th:src="@{/js/ie10-viewport-bug-workaround.js}"></script>
+</body>
+</html>

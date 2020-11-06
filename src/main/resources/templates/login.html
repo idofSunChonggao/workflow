@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>登录</title>
+		<link rel="icon" th:href="@{/images/favicon.ico}">
+		<!-- Bootstrap core CSS -->
+		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+		<!-- Custom styles for this template -->
+		<link th:href="@{/css/sign_in.css}" rel="stylesheet">
+		<link th:href="@{/css/copyright.css}" type="text/css" rel="stylesheet">
+		<style>
+			.msg
+			{
+				font-family: "宋体","Times New Roman";
+				font-size: 15px;
+				color:red;
+			}
+		</style>
+	</head>
+
+	<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top" th:fragment="head">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">《软件工程》-报销OA系统</a>
+			</div>
+			<div id="navbar" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li><a th:href="@{/index}">主页</a></li>
+					<li><a th:href="@{/apply}">报销申请</a></li>
+					<li><a th:href="@{/check}">报销审核</a></li>
+					<li class="active"><a th:href="@{/login}">登录</a></li>
+				</ul>
+			</div><!--/.nav-collapse -->
+		</div>
+	</nav>
+	<div class="text-center">
+		<form role="form" class="form-signin" th:action="@{/login}" method="post">
+			<img class="mb-4" th:src="@{/images/bootstrap-solid.svg}" alt="" width="72" height="72">
+			<h1 class="h3 mb-3 font-weight-normal">请登录</h1>
+			<label class="sr-only" >用户名</label>
+			<input type="text" id=“form-name” name="username" class="form-control" th:class="|form-control ${msg != null ? 'is-invalid':''}|" placeholder="Username" th:value="${param.username}" required="" autofocus="">
+			<label class="sr-only">密码</label>
+			<input type="password" id=“form-password” name="password" class="form-control" th:class="|form-control ${msg != null ? 'is-invalid':''}|" placeholder="Password" th:value="${param.password}" required="">
+			<div class="checkbox mb-3">
+			<label>
+          		<input type="checkbox" value="remember-me" name="remember-me"/> 记住我
+        	</label>
+			</div>
+			<button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+			<br />
+			<div class="text-center" th:if="${msg!=null}"><a class="msg" th:text="${msg}">  </a></div>
+			<br />
+		</form>
+	</div>
+	<div id="footer" th:fragment="foot">CopyRight@2020 李灵芝 </div>
+	</body>
+
+</html>
